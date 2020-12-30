@@ -18,14 +18,12 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange
 
-def call(def spreadsheetId,def credentialsFile, def range){
+def call(def spreadsheetId,def credentialsFile, def range, def root_path){
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     def HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-//    def spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
-    //  def range = "Class Data!A2:E";
     def APPLICATION_NAME = "Google Sheets API Java Quickstart";
 
-    Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT,credentialsFile))
+    Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT,credentialsFile,root_path))
             .setApplicationName(APPLICATION_NAME)
             .build();
     ValueRange response = service.spreadsheets().values()
@@ -45,15 +43,15 @@ def call(def spreadsheetId,def credentialsFile, def range){
     return values
 }
 
-def getCredentials(def HTTP_TRANSPORT, def credentialsFile){
+def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_pathroot_path){
     // def CREDENTIALS_FILE_PATH = "credentials.json";
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    def TOKENS_DIRECTORY_PATH = "tokens";
+    def TOKENS_DIRECTORY_PATH = root_path+"/tokens";
     def List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 
     // Load client secrets.
     //InputStream ins = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
-    InputStream ins =new FileInputStream(new File(credentialsFile))
+    InputStream ins =new FileInputStream(new File(root_path+"/"+credentialsFile))
     if (ins == null) {
         throw new FileNotFoundException("Resource not found: " + credentialsFile);
     }

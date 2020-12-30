@@ -52,11 +52,11 @@ def getCredentials(def HTTP_TRANSPORT, def credentialsFile){
     def List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 
     // Load client secrets.
-    InputStream in = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
-    if (in == null) {
+    InputStream ins = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
+    if (ins == null) {
         throw new FileNotFoundException("Resource not found: " + credentialsFile);
     }
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(ins));
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
             HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
             .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))

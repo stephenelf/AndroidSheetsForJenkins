@@ -52,7 +52,8 @@ def getCredentials(def HTTP_TRANSPORT, def credentialsFile){
     def List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 
     // Load client secrets.
-    InputStream ins = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
+    //InputStream ins = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
+    InputStream ins =new FileInputStream(new File(credentialsFile))
     if (ins == null) {
         throw new FileNotFoundException("Resource not found: " + credentialsFile);
     }

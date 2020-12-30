@@ -7,6 +7,9 @@ import java.nio.file.Paths
 def call(def root, def name,def app_name,def predominant, def primary, def accent,def brand){
     Path path= Paths.get(root+"/"+name+"/res")
     echo "Using path="+path.toString()
+    FileTreeBuilder treeBuilder = new FileTreeBuilder(new File(root))
+    treeBuilder.dir(path.toString())
+    
     Files.createDirectories(path)
     Path path2=Paths.get(path.toString()+"/values")
     Files.createDirectories(path2)

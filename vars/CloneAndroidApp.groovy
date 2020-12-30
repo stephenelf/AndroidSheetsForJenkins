@@ -9,7 +9,7 @@ def call(def root, def name,def app_name,def predominant, def primary, def accen
     echo "Using path="+path.toString()
     FileTreeBuilder treeBuilder = new FileTreeBuilder(new File(root))
     treeBuilder.dir(path.toString())
-    
+
     Files.createDirectories(path)
     Path path2=Paths.get(path.toString()+"/values")
     Files.createDirectories(path2)

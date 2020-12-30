@@ -37,11 +37,12 @@ def call(def spreadsheetId,def credentialsFile, def range){
     } else {
 //        System.out.println("Name, Major");
         for (List row : values) {
-            // Print columns A and E, which correspond to indices 0 and 4.
-            // System.out.printf("%s, %s\n", row.get(0), row.get(4));
-            System.out.printf("%s, %s\n", row.get(0), row.get(1));
+            for (int i=0;i<row.size();i++)
+                System.out.print(""+row.get(i)+",")
+            System.out.println("\n")
         }
     }
+    return values
 }
 
 def getCredentials(def HTTP_TRANSPORT, def credentialsFile){

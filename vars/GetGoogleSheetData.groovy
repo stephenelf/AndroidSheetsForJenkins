@@ -43,7 +43,7 @@ def call(def spreadsheetId,def credentialsFile, def range, def root_path){
     return values
 }
 
-def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_pathroot_path){
+def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_path){
     // def CREDENTIALS_FILE_PATH = "credentials.json";
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     def TOKENS_DIRECTORY_PATH = root_path+"/tokens";

@@ -52,7 +52,7 @@ def getCredentials(def HTTP_TRANSPORT, def credentialsFile){
     def List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 
     // Load client secrets.
-    InputStream in = HelloWorld.class.getResourceAsStream(credentialsFile);
+    InputStream in = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
     if (in == null) {
         throw new FileNotFoundException("Resource not found: " + credentialsFile);
     }

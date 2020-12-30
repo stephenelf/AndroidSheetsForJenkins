@@ -6,7 +6,7 @@ import java.nio.file.Paths
 
 def call(def root, def name,def app_name,def predominant, def primary, def accent,def brand){
     Path path= Paths.get(root+"/"+name+"/res")
-    println("Using path="+path.toString())
+    echo "Using path="+path.toString()
     Files.createDirectories(path)
     Path path2=Paths.get(path.toString()+"/values")
     Files.createDirectories(path2)
@@ -14,26 +14,26 @@ def call(def root, def name,def app_name,def predominant, def primary, def accen
     createColorsXML(path2.toString(),predominant,primary,accent,brand)
 
     path2=Paths.get(path.toString()+"/values-es")
-    println("Using path="+path2.toString())
+    echo "Using path="+path2.toString()
     Files.createDirectories(path2)
     createStringsXML(path2.toString(),app_name)
     createColorsXML(path2.toString(),predominant,primary,accent,brand)
 
     path2=Paths.get(path.toString()+"/values-ca")
-    println("Using path="+path2.toString())
+    echo "Using path="+path2.toString()
     Files.createDirectories(path2)
     createStringsXML(path2.toString(),app_name)
     createColorsXML(path2.toString(),predominant,primary,accent,brand)
 
     path2=Paths.get(path.toString()+"/values-fr")
-    println("Using path="+path2.toString())
+    echo "Using path="+path2.toString()
     Files.createDirectories(path2)
     createStringsXML(path2.toString(),app_name)
     createColorsXML(path2.toString(),predominant,primary,accent,brand)
 
 
     path2=Paths.get(path.toString()+"/values-ru-rRU")
-    println("Using path="+path2.toString())
+    echo "Using path="+path2.toString()
     Files.createDirectories(path2)
     createStringsXML(path2.toString(),app_name)
     createColorsXML(path2.toString(),predominant,primary,accent,brand)
@@ -42,7 +42,7 @@ def call(def root, def name,def app_name,def predominant, def primary, def accen
 
 
 def createStringsXML(def path, def app_name){
-    println("Creating strings.xml")
+    echo "Creating strings.xml"
     def STRINGS_XML="""<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">${app_name}</string>
@@ -52,7 +52,7 @@ def createStringsXML(def path, def app_name){
 }
 
 def createColorsXML(def path,def predominant, def primary, def accent,def brand){
-    println("Creating colors.xml")
+    echo "Creating colors.xml"
     def COLORS_XML="""<?xml version="1.0" encoding="utf-8"?> 
     <resources> 
       <color name="predominant">#CC${predominant}</color> 

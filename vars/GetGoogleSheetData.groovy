@@ -18,12 +18,13 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange
 
-def call(def spreadsheetId,def credentialsFile, def range, def root_path){
+def call(def spreadsheetId,def credentialsFile, def range, def root_path,def port, def user){
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     def HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     def APPLICATION_NAME = "Google Sheets API Java Quickstart";
 
-    Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT,credentialsFile,root_path))
+    Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+            getCredentials(HTTP_TRANSPORT,credentialsFile,root_path,port,user))
             .setApplicationName(APPLICATION_NAME)
             .build();
     ValueRange response = service.spreadsheets().values()
@@ -43,7 +44,7 @@ def call(def spreadsheetId,def credentialsFile, def range, def root_path){
     return values
 }
 
-def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_path){
+def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_path, def port, def user){
     // def CREDENTIALS_FILE_PATH = "credentials.json";
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     def TOKENS_DIRECTORY_PATH = root_path+"/tokens";
@@ -51,16 +52,21 @@ def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_path){
 
     // Load client secrets.
     //InputStream ins = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
+    echo "getting credentials using path=(${root_path}), file (${credentialsFile}), port (${port}), user (${user})"
     InputStream ins =new FileInputStream(new File(root_path+"/"+credentialsFile))
     if (ins == null) {
+        echo "file not found"
         throw new FileNotFoundException("Resource not found: " + credentialsFile);
     }
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(ins));
+    echo "GoogleClientSecrets created."
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
             HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
             .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
             .setAccessType("offline")
             .build();
+    echo "GoogleAuthorizationCodeFlow created."
     LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+    echo "LocalServerReceiver created."
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
 }

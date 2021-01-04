@@ -22,17 +22,20 @@ def call(def spreadsheetId,def credentialsFile, def range, def root_path,def por
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     def HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     def APPLICATION_NAME = "Google Sheets API Java Quickstart";
-
+    echo "sheet id=(${spreadsheetId}, range=(${range})"
     Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY,
             getCredentials(HTTP_TRANSPORT,credentialsFile,root_path,port,user))
             .setApplicationName(APPLICATION_NAME)
             .build();
+    echo ("Sheets service created.")
     ValueRange response = service.spreadsheets().values()
             .get(spreadsheetId, range)
             .execute();
+    echo ("Got response")
     List<List<Object>> values = response.getValues();
     if (values == null || values.isEmpty()) {
         System.out.println("No data found.");
+        echo "No data found."
     } else {
 //        System.out.println("Name, Major");
         for (List row : values) {

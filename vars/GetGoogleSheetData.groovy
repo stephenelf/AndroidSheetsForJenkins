@@ -66,6 +66,7 @@ def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_path, def p
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
             HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
             .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+            .setApprovalPrompt("force")
             .setAccessType("offline")
             .build();
     echo "GoogleAuthorizationCodeFlow created."

@@ -70,7 +70,7 @@ def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_path, def p
             .setAccessType("offline")
             .build();
     echo "GoogleAuthorizationCodeFlow created."
-    LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+    LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(port).build();
     echo "LocalServerReceiver created."
-    return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+    return new AuthorizationCodeInstalledApp(flow, receiver).authorize(user);
 }

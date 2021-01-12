@@ -21,10 +21,13 @@ import com.google.api.services.sheets.v4.model.ValueRange
 def call(def spreadsheetId,def credentialsFile, def range, def root_path,def port, def user){
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     def HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-    def APPLICATION_NAME = "Google Sheets API Java Quickstart";
-    echo "sheet id=(${spreadsheetId}, range=(${range})"
-    Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY,
-            getCredentials(HTTP_TRANSPORT,credentialsFile,root_path,port,user))
+    def APPLICATION_NAME = "Google Sheets  API Java Quickstart";
+    echo ("sheet id=(${spreadsheetId}, range=(${range})")
+
+    Credential credential=getCredentials(HTTP_TRANSPORT,credentialsFile,root_path,port,user)
+
+    echo ("got credentials, building sheet...")
+    Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY,credential)
             .setApplicationName(APPLICATION_NAME)
             .build();
     echo ("Sheets service created.")

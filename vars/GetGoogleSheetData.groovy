@@ -53,12 +53,13 @@ def call(def spreadsheetId,def credentialsFile, def range, def root_path,def por
 def getCredentials(def HTTP_TRANSPORT, def credentialsFile, def root_path, def port, def user){
     // def CREDENTIALS_FILE_PATH = "credentials.json";
     def JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    def TOKENS_DIRECTORY_PATH = root_path+"/tokens";
+    def TOKENS_DIRECTORY_PATH = root_path+"/tokens/";
     def List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
 
     // Load client secrets.
     //InputStream ins = GetGoogleSheetData.class.getResourceAsStream(credentialsFile);
     echo "getting credentials using path=(${root_path}), file (${credentialsFile}), port (${port}), user (${user})"
+    echo "credential tokens path=(${TOKENS_DIRECTORY_PATH})"
     InputStream ins =new FileInputStream(new File(root_path+"/"+credentialsFile))
     if (ins == null) {
         echo "file not found"

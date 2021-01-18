@@ -3,11 +3,12 @@ package com.stephenelf.jenkins
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.zip.ZipFile
 
 class Utils {
 
 
-   static def cloneAndroidApp(def root, def name,def app_name,def predominant, def primary, def accent,def brand){
+   static def cloneAndroidApp(def root, def name,def app_name,def predominant, def primary, def accent,def brand,def assetsUrl){
         Path path= Paths.get(root+"/"+name+"/res")
         echo "Using path="+path.toString()
         FileTreeBuilder treeBuilder = new FileTreeBuilder(new File(root))
@@ -43,6 +44,9 @@ class Utils {
         Files.createDirectories(path2)
         createStringsXML(path2.toString(),app_name)
         createColorsXML(path2.toString(),predominant,primary,accent,brand)
+
+       path2=Paths.get(root+"/"+name)
+       downloadAssets(assetsUrl,"assets.zip",path2.toString())
     }
 
 
@@ -68,5 +72,46 @@ class Utils {
     </resources> 
 """
         new File(path+"/colors.xml").text = COLORS_XML
+    }
+
+    def unzip(String zipFileName, String outputDir){
+        def zip = new ZipFile(new File(zipFileName))
+        zip.entries().each{
+            if (!it.isDirectory()){
+                def fOut = new File(outputDir+ File.separator + it.name)
+                //create output dir if not exists
+                new File(fOut.parent).mkdirs()
+                def fos = new FileOutputStream(fOut)
+                //println "name:${it.name}, size:${it.size}"
+                def buf = new byte[it.size]
+                def len = zip.getInputStream(it).read(buf) //println zip.getInputStream(it).text
+                fos.write(buf, 0, len)
+                fos.close()
+            }
+        }
+        zip.close()
+    }
+
+    def downloadAssets(String url, String filename, String destination){
+        redirectFollowingDownload(url, filename)
+        unzip(filename,destination)
+    }
+
+
+    def redirectFollowingDownload( String url, String filename ) {
+        while( url ) {
+            new URL( url ).openConnection().with { conn ->
+                conn.instanceFollowRedirects = false
+                url = conn.getHeaderField( "Location" )
+                if( !url ) {
+                    new File( filename ).withOutputStream { out ->
+                        conn.inputStream.with { inp ->
+                            out << inp
+                            inp.close()
+                        }
+                    }
+                }
+            }
+        }
     }
 }

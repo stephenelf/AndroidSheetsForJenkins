@@ -5,7 +5,7 @@ def call(def root, def spreadsheetId,def credentialsFile, def range){
     List<List<Object>> values = GetGoogleSheetData().call(spreadsheetId,credentialsFile,range)
     for (List row : values) {
         try {
-            Utils.cloneAndroidApp(root, row.get(4), row.get(6), row.get(7), row.get(8), row.get(9), row.get(10))
+            Utils.cloneAndroidApp(root, row.get(4), row.get(6), row.get(7), row.get(8), row.get(9), row.get(10),row.get(11))
         }catch(Exception e){
             System.out.println("Fail to create app sufix ("+row.get(4)+")")
         }

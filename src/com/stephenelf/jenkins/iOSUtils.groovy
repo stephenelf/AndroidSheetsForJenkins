@@ -32,7 +32,7 @@ class iOSUtils {
         changeTextInFile(source,"form_button_color = \"(.*?)\"","races_group = \"${primary}\"")
     }
 
-    def changeTextInFile(File source,String toSearch,String replacement){
+    static def changeTextInFile(File source,String toSearch,String replacement){
         source.write(source.text.replaceAll(toSearch, replacement))
     }
 }

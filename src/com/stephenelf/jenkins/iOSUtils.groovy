@@ -14,6 +14,7 @@ class iOSUtils {
         Path org = Paths.get("${path}${origin_target}")
         Path dest = Paths.get("${destination}${new_target}")
         //Files.createDirectories(dest)
+        echo "copy target from ${org} to ${dest}"
         FileUtils.copyDirectoryToDirectory(new File(org.toString()),new File(destination.toString()))
         (new File("${destination}${origin_target}")).renameTo "${destination}${new_target}"
         (new File("${destination}${new_target}/${origin_target}.xcassets")).renameTo "${destination}${new_target}/${new_target}.xcassets"

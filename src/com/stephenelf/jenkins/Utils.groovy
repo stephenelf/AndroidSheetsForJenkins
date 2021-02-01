@@ -51,7 +51,7 @@ class Utils {
 
 
 
-    def createStringsXML(def path, def app_name){
+    static def createStringsXML(def path, def app_name){
         echo "Creating strings.xml"
         def STRINGS_XML="""<?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -61,7 +61,7 @@ class Utils {
         new File(path+"/strings.xml").text = STRINGS_XML
     }
 
-    def createColorsXML(def path,def predominant, def primary, def accent,def brand){
+    static def createColorsXML(def path,def predominant, def primary, def accent,def brand){
         echo "Creating colors.xml"
         def COLORS_XML="""<?xml version="1.0" encoding="utf-8"?> 
     <resources> 
@@ -74,7 +74,7 @@ class Utils {
         new File(path+"/colors.xml").text = COLORS_XML
     }
 
-    def unzip(String zipFileName, String outputDir){
+    static def unzip(String zipFileName, String outputDir){
         def zip = new ZipFile(new File(zipFileName))
         zip.entries().each{
             if (!it.isDirectory()){
@@ -98,7 +98,7 @@ class Utils {
     }
 
 
-    def redirectFollowingDownload( String url, String filename ) {
+    static def redirectFollowingDownload( String url, String filename ) {
         while( url ) {
             new URL( url ).openConnection().with { conn ->
                 conn.instanceFollowRedirects = false

@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def cloneFromRemoteCSV(def root, String urlCSV, boolean skipFirstLine) {
+def call(def root, String urlCSV, boolean skipFirstLine) {
     def filename = root + "/csvfile_" + System.currentTimeMillis()
     System.out.println("Downloading to:${filename}")
     //  if (!urlCSV) {

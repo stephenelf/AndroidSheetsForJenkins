@@ -16,7 +16,8 @@ class iOSUtils {
         //Files.createDirectories(dest)
         println "copy target from ${org} to ${dest}"
         FileUtils.copyDirectoryToDirectory(new File(org.toString()),new File(dest.toString()))
-        (new File("${destination}${origin_target}")).renameTo dest.toString()
+        (new File(dest.toString())).renameTo "${destination}${origin_target}"
+
         (new File("${destination}${new_target}/${origin_target}.xcassets")).renameTo dest.toString()+"/${new_target}.xcassets"
         (new File("${destination}${new_target}/${new_target}.xcassets/${origin_target}-AppIcon.appiconset")).renameTo dest.toString()+"/${new_target}.xcassets/${new_target}-AppIcon.appiconset"
         (new File("${destination}${new_target}/${origin_target}-Info.plist")).renameTo dest.toString()+"/${new_target}-Info.plist"

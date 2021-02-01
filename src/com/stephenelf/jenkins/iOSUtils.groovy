@@ -23,7 +23,7 @@ class iOSUtils {
     }
 
 
-    def updateSMConstants(File source,String races_group,String primary, String accent){
+    static def updateSMConstants(File source,String races_group,String primary, String accent){
         String test=" races_group = \"activo-sports\" races_group = \"activo-sports\""
         System.out.println("matches="+test.matches(" races_group = \"(.*?)\""))
         changeTextInFile(source,"races_group = \"(.*?)\"","races_group = \"${races_group}\"")

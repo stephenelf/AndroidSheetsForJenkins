@@ -92,7 +92,7 @@ class Utils {
         zip.close()
     }
 
-    def downloadAssets(String url, String filename, String destination){
+    static def downloadAssets(String url, String filename, String destination){
         redirectFollowingDownload(url, filename)
         unzip(filename,destination)
     }
@@ -113,5 +113,11 @@ class Utils {
                 }
             }
         }
+    }
+
+    static def downloadGoogleServices(String url, String filename, String destination) {
+        System.out.println("url=${url}")
+        System.out.println("Downloading google services:${destination}/${filename}")
+        redirectFollowingDownload(url, "${destination}/${filename}")
     }
 }
